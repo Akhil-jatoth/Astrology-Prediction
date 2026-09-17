@@ -1,0 +1,18 @@
+{
+  "name": "AstraVerse AI",
+  "short_name": "AstraVerse",
+  "description": "Discover Your Destiny Through the Stars",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1026",
+  "theme_color": "#0B1026",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

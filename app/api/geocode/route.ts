@@ -1,0 +1,16 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { geocodePlace } from '@/lib/geocode';
+
+export async function GET(request: NextRequest) {
+  const q = request.nextUrl.searchParams.get('q');
+  if (!q || q.length < 2) {
+    return NextResponse.json({ results: [] });
+  }
+
+  try {
+    const results = await geocodePlace(q);
+    return NextResponse.json({ results });
+  } catch {
+    return NextResponse.json({ results: [] });
+  }
+}

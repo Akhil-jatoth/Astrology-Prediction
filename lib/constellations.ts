@@ -1,0 +1,287 @@
+// Constellation data for all 12 zodiac signs
+// Stars: [name, x, y, magnitude (1-5, lower = brighter)]
+// Lines: pairs of star indices to connect
+
+export interface ConstellationStar {
+  name: string;
+  x: number; // 0-100 coordinate space
+  y: number;
+  magnitude: number; // 1=brightest, 5=dimmest
+  isNamed?: boolean;
+}
+
+export interface Constellation {
+  sign: string;
+  stars: ConstellationStar[];
+  lines: [number, number][];
+}
+
+export const CONSTELLATIONS: Record<string, Constellation> = {
+  aries: {
+    sign: 'aries',
+    stars: [
+      { name: 'Hamal (α)', x: 55, y: 38, magnitude: 1, isNamed: true },
+      { name: 'Sheratan (β)', x: 65, y: 44, magnitude: 2, isNamed: true },
+      { name: 'Mesarthim (γ)', x: 70, y: 48, magnitude: 3, isNamed: true },
+      { name: '41 Ari', x: 40, y: 32, magnitude: 4 },
+      { name: 'ε Ari', x: 50, y: 55, magnitude: 4 },
+    ],
+    lines: [
+      [0, 1],
+      [1, 2],
+      [0, 3],
+      [0, 4],
+    ],
+  },
+  taurus: {
+    sign: 'taurus',
+    stars: [
+      { name: 'Aldebaran (α)', x: 40, y: 52, magnitude: 1, isNamed: true },
+      { name: 'Elnath (β)', x: 25, y: 20, magnitude: 2, isNamed: true },
+      { name: 'ε Tau', x: 50, y: 48, magnitude: 3 },
+      { name: 'γ Tau', x: 55, y: 52, magnitude: 3 },
+      { name: 'δ Tau', x: 53, y: 46, magnitude: 3 },
+      { name: 'The Pleiades', x: 75, y: 30, magnitude: 2, isNamed: true },
+      { name: 'λ Tau', x: 65, y: 65, magnitude: 4 },
+      { name: 'ξ Tau', x: 78, y: 70, magnitude: 4 },
+      { name: 'ο Tau', x: 82, y: 72, magnitude: 5 },
+      { name: 'ζ Tau', x: 30, y: 40, magnitude: 3 },
+    ],
+    lines: [
+      [0, 1],
+      [0, 2],
+      [2, 3],
+      [3, 4],
+      [0, 9],
+      [0, 6],
+      [6, 7],
+      [7, 8],
+    ],
+  },
+  gemini: {
+    sign: 'gemini',
+    stars: [
+      { name: 'Pollux (β)', x: 35, y: 22, magnitude: 1, isNamed: true },
+      { name: 'Castor (α)', x: 45, y: 20, magnitude: 1, isNamed: true },
+      { name: 'Alhena (γ)', x: 38, y: 55, magnitude: 2, isNamed: true },
+      { name: 'Wasat (δ)', x: 55, y: 42, magnitude: 3 },
+      { name: 'Mebsuda (ε)', x: 60, y: 35, magnitude: 3 },
+      { name: 'Mekbuda (ζ)', x: 65, y: 50, magnitude: 4 },
+      { name: 'μ Gem', x: 32, y: 68, magnitude: 3 },
+      { name: 'η Gem', x: 25, y: 60, magnitude: 3 },
+      { name: 'ξ Gem', x: 52, y: 70, magnitude: 4 },
+      { name: 'Tejat (η)', x: 24, y: 58, magnitude: 3 },
+    ],
+    lines: [
+      [0, 2],
+      [1, 4],
+      [4, 3],
+      [3, 2],
+      [3, 5],
+      [5, 8],
+      [2, 6],
+      [6, 7],
+    ],
+  },
+  cancer: {
+    sign: 'cancer',
+    stars: [
+      { name: 'Acubens (α)', x: 68, y: 62, magnitude: 3, isNamed: true },
+      { name: 'Al Tarf (β)', x: 30, y: 72, magnitude: 2, isNamed: true },
+      { name: 'Asellus Borealis (γ)', x: 48, y: 38, magnitude: 4, isNamed: true },
+      { name: 'Asellus Australis (δ)', x: 52, y: 50, magnitude: 3, isNamed: true },
+      { name: 'ι Cnc', x: 62, y: 30, magnitude: 4 },
+    ],
+    lines: [
+      [1, 3],
+      [3, 2],
+      [2, 4],
+      [3, 0],
+    ],
+  },
+  leo: {
+    sign: 'leo',
+    stars: [
+      { name: 'Regulus (α)', x: 35, y: 65, magnitude: 1, isNamed: true },
+      { name: 'Denebola (β)', x: 78, y: 40, magnitude: 2, isNamed: true },
+      { name: 'Algieba (γ)', x: 42, y: 45, magnitude: 2, isNamed: true },
+      { name: 'Zosma (δ)', x: 65, y: 35, magnitude: 3 },
+      { name: 'Chertan (θ)', x: 60, y: 45, magnitude: 3 },
+      { name: 'η Leo', x: 50, y: 30, magnitude: 4 },
+      { name: 'ζ Leo', x: 45, y: 35, magnitude: 3 },
+      { name: 'μ Leo', x: 38, y: 35, magnitude: 4 },
+      { name: 'ε Leo', x: 40, y: 25, magnitude: 3 },
+    ],
+    lines: [
+      [0, 2],
+      [2, 6],
+      [6, 7],
+      [7, 8],
+      [8, 5],
+      [2, 4],
+      [4, 3],
+      [3, 1],
+    ],
+  },
+  virgo: {
+    sign: 'virgo',
+    stars: [
+      { name: 'Spica (α)', x: 55, y: 70, magnitude: 1, isNamed: true },
+      { name: 'Porrima (γ)', x: 48, y: 48, magnitude: 2, isNamed: true },
+      { name: 'Vindemiatrix (ε)', x: 35, y: 32, magnitude: 2, isNamed: true },
+      { name: 'Zaniah (η)', x: 42, y: 42, magnitude: 3 },
+      { name: 'δ Vir', x: 52, y: 55, magnitude: 3 },
+      { name: 'ζ Vir', x: 58, y: 60, magnitude: 3 },
+      { name: 'ι Vir', x: 68, y: 42, magnitude: 4 },
+      { name: 'μ Vir', x: 72, y: 58, magnitude: 4 },
+    ],
+    lines: [
+      [0, 5],
+      [5, 4],
+      [4, 1],
+      [1, 3],
+      [3, 2],
+      [1, 6],
+      [6, 7],
+      [7, 0],
+    ],
+  },
+  libra: {
+    sign: 'libra',
+    stars: [
+      { name: 'Zubenelgenubi (α)', x: 42, y: 62, magnitude: 2, isNamed: true },
+      { name: 'Zubeneschamali (β)', x: 55, y: 35, magnitude: 2, isNamed: true },
+      { name: 'Brachium (σ)', x: 30, y: 42, magnitude: 3, isNamed: true },
+      { name: 'γ Lib', x: 48, y: 72, magnitude: 4 },
+      { name: 'ι Lib', x: 68, y: 55, magnitude: 4 },
+      { name: 'υ Lib', x: 35, y: 28, magnitude: 4 },
+    ],
+    lines: [
+      [2, 0],
+      [0, 1],
+      [0, 3],
+      [1, 4],
+      [1, 5],
+    ],
+  },
+  scorpio: {
+    sign: 'scorpio',
+    stars: [
+      { name: 'Antares (α)', x: 40, y: 38, magnitude: 1, isNamed: true },
+      { name: 'Shaula (λ)', x: 72, y: 78, magnitude: 2, isNamed: true },
+      { name: 'Sargas (θ)', x: 65, y: 68, magnitude: 2, isNamed: true },
+      { name: 'Dschubba (δ)', x: 30, y: 28, magnitude: 2, isNamed: true },
+      { name: 'ε Sco', x: 48, y: 50, magnitude: 3 },
+      { name: 'ζ Sco', x: 55, y: 60, magnitude: 3 },
+      { name: 'η Sco', x: 60, y: 65, magnitude: 3 },
+      { name: 'π Sco', x: 22, y: 28, magnitude: 3 },
+      { name: 'σ Sco', x: 35, y: 33, magnitude: 3 },
+      { name: 'κ Sco', x: 78, y: 72, magnitude: 3 },
+    ],
+    lines: [
+      [7, 3],
+      [3, 8],
+      [8, 0],
+      [0, 4],
+      [4, 5],
+      [5, 6],
+      [6, 2],
+      [2, 1],
+      [1, 9],
+    ],
+  },
+  sagittarius: {
+    sign: 'sagittarius',
+    stars: [
+      { name: 'Kaus Australis (ε)', x: 52, y: 68, magnitude: 1, isNamed: true },
+      { name: 'Nunki (σ)', x: 68, y: 38, magnitude: 2, isNamed: true },
+      { name: 'Kaus Media (δ)', x: 45, y: 55, magnitude: 2, isNamed: true },
+      { name: 'Kaus Borealis (λ)', x: 38, y: 42, magnitude: 3, isNamed: true },
+      { name: 'Ascella (ζ)', x: 62, y: 55, magnitude: 3 },
+      { name: 'φ Sgr', x: 72, y: 52, magnitude: 3 },
+      { name: 'τ Sgr', x: 78, y: 62, magnitude: 4 },
+      { name: 'γ Sgr', x: 35, y: 65, magnitude: 3 },
+      { name: 'δ Sgr', x: 40, y: 58, magnitude: 3 },
+    ],
+    lines: [
+      [7, 0],
+      [0, 2],
+      [2, 3],
+      [2, 4],
+      [4, 0],
+      [4, 1],
+      [1, 5],
+      [5, 6],
+    ],
+  },
+  capricorn: {
+    sign: 'capricorn',
+    stars: [
+      { name: 'Deneb Algedi (δ)', x: 72, y: 45, magnitude: 2, isNamed: true },
+      { name: 'Dabih (β)', x: 28, y: 35, magnitude: 2, isNamed: true },
+      { name: 'Algedi (α)', x: 22, y: 30, magnitude: 3, isNamed: true },
+      { name: 'Nashira (γ)', x: 62, y: 42, magnitude: 3 },
+      { name: 'ζ Cap', x: 58, y: 62, magnitude: 4 },
+      { name: 'θ Cap', x: 50, y: 68, magnitude: 4 },
+      { name: 'ι Cap', x: 40, y: 65, magnitude: 4 },
+      { name: 'ψ Cap', x: 78, y: 55, magnitude: 5 },
+    ],
+    lines: [
+      [2, 1],
+      [1, 6],
+      [6, 5],
+      [5, 4],
+      [4, 3],
+      [3, 0],
+      [0, 7],
+    ],
+  },
+  aquarius: {
+    sign: 'aquarius',
+    stars: [
+      { name: 'Sadalsuud (β)', x: 35, y: 30, magnitude: 2, isNamed: true },
+      { name: 'Sadalmelik (α)', x: 48, y: 35, magnitude: 2, isNamed: true },
+      { name: 'Skat (δ)', x: 62, y: 60, magnitude: 3, isNamed: true },
+      { name: 'Sadachbia (γ)', x: 55, y: 45, magnitude: 3 },
+      { name: 'ε Aqr', x: 50, y: 55, magnitude: 3 },
+      { name: 'ζ Aqr', x: 58, y: 52, magnitude: 4 },
+      { name: 'η Aqr', x: 68, y: 70, magnitude: 4 },
+      { name: 'λ Aqr', x: 72, y: 50, magnitude: 4 },
+    ],
+    lines: [
+      [0, 1],
+      [1, 3],
+      [3, 4],
+      [4, 5],
+      [5, 2],
+      [2, 6],
+      [3, 7],
+    ],
+  },
+  pisces: {
+    sign: 'pisces',
+    stars: [
+      { name: 'Alrescha (α)', x: 55, y: 48, magnitude: 3, isNamed: true },
+      { name: 'Fum al Samakah (β)', x: 30, y: 28, magnitude: 4, isNamed: true },
+      { name: 'η Psc', x: 22, y: 42, magnitude: 3 },
+      { name: 'γ Psc', x: 25, y: 55, magnitude: 4 },
+      { name: 'κ Psc', x: 20, y: 32, magnitude: 4 },
+      { name: 'ω Psc', x: 65, y: 32, magnitude: 4 },
+      { name: 'ι Psc', x: 72, y: 25, magnitude: 4 },
+      { name: 'θ Psc', x: 68, y: 42, magnitude: 4 },
+      { name: 'ε Psc', x: 62, y: 55, magnitude: 4 },
+      { name: 'δ Psc', x: 58, y: 62, magnitude: 5 },
+    ],
+    lines: [
+      [4, 1],
+      [1, 2],
+      [2, 3],
+      [3, 0],
+      [0, 9],
+      [9, 8],
+      [8, 7],
+      [7, 5],
+      [5, 6],
+    ],
+  },
+};
