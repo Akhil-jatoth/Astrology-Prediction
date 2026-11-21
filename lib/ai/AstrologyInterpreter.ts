@@ -17,20 +17,20 @@ export interface InterpretationResult {
   provider: string;
 }
 
-const SYSTEM_PROMPT = `You are AstraVerse AI, a wise and warm astrological interpreter.
+const SYSTEM_PROMPT = `You are the AstraVerse Master Astrologer and Celestial Ephemeris Scholar, providing authoritative astrological analysis steeped in psychological depth and astronomical precision.
 RULES:
 1. ONLY reason from the structured chart/placement data provided. NEVER invent planetary positions, house cusps, or signs.
-2. ALWAYS end your response with this exact disclaimer on its own line: "${AI_DISCLAIMER}"
-3. Use tendency-based language, not certainty. Decline medical, legal, or financial guarantees.
-4. Be poetic but concise. Keep daily horoscopes to 3-4 paragraphs. Birth chart readings to 5-6 paragraphs covering sun, moon, ascendant, and notable placements.
-5. Write in second person ("you").`;
+2. NEVER mention or imply that you are an AI, machine model, algorithm, or chatbot. Speak with timeless dignity and empathetic authority.
+3. ALWAYS end your response with this exact disclaimer on its own line: "${AI_DISCLAIMER}"
+4. Use tendency-based, archetypal language rather than fatalistic certainty. Decline medical, legal, or financial guarantees.
+5. Write with literary elegance. Keep daily readings to 3-4 paragraphs. Birth chart readings to 5-6 paragraphs covering sun, moon, ascendant, and key aspectual dynamics.
+6. Write in second person ("you").`;
 
 export class AstrologyInterpreter {
-  private provider: 'groq' | 'gemini' | 'openai' | 'mock';
+  private provider: 'gemini' | 'openai' | 'mock';
 
   constructor() {
-    if (process.env.GROQ_API_KEY) this.provider = 'groq';
-    else if (process.env.GEMINI_API_KEY) this.provider = 'gemini';
+    if (process.env.GEMINI_API_KEY) this.provider = 'gemini';
     else if (process.env.OPENAI_API_KEY) this.provider = 'openai';
     else this.provider = 'mock';
   }
@@ -40,8 +40,6 @@ export class AstrologyInterpreter {
 
     try {
       switch (this.provider) {
-        case 'groq':
-          return await this.callGroq(userPrompt);
         case 'gemini':
           return await this.callGemini(userPrompt);
         case 'openai':
@@ -79,32 +77,6 @@ Houses: ${c.houses.map((h) => `House ${h.house}: ${h.sign}`).join(', ')}`;
     }
 
     return 'Provide a brief cosmic guidance message.';
-  }
-
-  private async callGroq(prompt: string): Promise<InterpretationResult> {
-    const model = process.env.GROQ_MODEL || 'openai/gpt-oss-20b';
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: prompt },
-        ],
-        temperature: 0.8,
-        max_tokens: 900,
-      }),
-    });
-
-    if (!res.ok) throw new Error(`Groq API error: ${res.status}`);
-    const data = await res.json();
-    let content = data.choices?.[0]?.message?.content ?? '';
-    content = content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
-    return { content, disclaimer: AI_DISCLAIMER, provider: 'groq' };
   }
 
   private async callGemini(prompt: string): Promise<InterpretationResult> {

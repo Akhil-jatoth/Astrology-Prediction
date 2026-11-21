@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AstraVerse AI</string>
+    <string name="title_activity_main">AstraVerse AI</string>
+    <string name="package_name">com.astraverse.app</string>
+    <string name="custom_url_scheme">com.astraverse.app</string>
+</resources>

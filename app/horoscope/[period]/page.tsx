@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AiDisclaimer } from '@/components/ui/AiDisclaimer';
 import { AstrologyChatbox } from '@/components/cosmic/AstrologyChatbox';
+import { CelestialSkyImageCard } from '@/components/cosmic/CelestialSkyImageCard';
 import { ZODIAC_DATA, ZODIAC_SIGNS, type ZodiacSign } from '@/lib/constants';
 
 const ELEMENT_COLORS: Record<string, string> = {
@@ -218,24 +219,24 @@ function HoroscopeDetail({ sign, dob, tob, targetDate }: { sign: ZodiacSign, dob
         ) : contentJson ? (
           <div className="space-y-6">
             <div>
-              <h4 className="mb-2 text-sm font-semibold text-white">Predictions 📅</h4>
+              <h4 className="mb-2 text-sm font-semibold tracking-wide text-white">☉ Daily Ephemeris & Transits</h4>
               <p className="whitespace-pre-line text-sm leading-relaxed text-silver">{contentJson.daily}</p>
             </div>
             {contentJson.compatibility && (
               <div>
-                <h4 className="mb-2 text-sm font-semibold text-pink-400">Relationship Compatibility ❤️</h4>
+                <h4 className="mb-2 text-sm font-semibold tracking-wide text-rose-300">♀ Venusian Dynamics & Synastry</h4>
                 <p className="whitespace-pre-line text-sm leading-relaxed text-silver">{contentJson.compatibility}</p>
               </div>
             )}
             {contentJson.career && (
               <div>
-                <h4 className="mb-2 text-sm font-semibold text-blue-400">Career Decisions 💼</h4>
+                <h4 className="mb-2 text-sm font-semibold tracking-wide text-sky-300">♂ Martial Drive & Vocational Endeavors</h4>
                 <p className="whitespace-pre-line text-sm leading-relaxed text-silver">{contentJson.career}</p>
               </div>
             )}
             {contentJson.spiritual && (
               <div>
-                <h4 className="mb-2 text-sm font-semibold text-purple-400">Spiritual Guidance 🧘</h4>
+                <h4 className="mb-2 text-sm font-semibold tracking-wide text-amber-200">♃ Jupiterian Wisdom & Inner Equilibrium</h4>
                 <p className="whitespace-pre-line text-sm leading-relaxed text-silver">{contentJson.spiritual}</p>
               </div>
             )}
@@ -289,12 +290,38 @@ export default function DailyHoroscopePage() {
         </p>
       </div>
 
-      {/* Personalization Inputs */}
-      <div className="mx-auto mb-10 max-w-md rounded-2xl p-6 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        <h3 className="mb-4 font-display text-lg text-white">Personalize Your Reading</h3>
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <div className="flex-1 text-left">
-            <label className="mb-1 block text-xs text-silver/60">Horoscope Date</label>
+      {/* Personalization Inputs & Star Sky Image Generator */}
+      <div className="mx-auto mb-10 max-w-2xl rounded-2xl p-6 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <h3 className="mb-4 font-display text-lg text-white">Personalize Date & Celestial Sky</h3>
+        <div className="flex flex-col gap-4 sm:flex-row items-end">
+          <div className="flex-1 text-left w-full">
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-xs text-silver/60">Horoscope Date</label>
+              <div className="flex gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setTargetDate(new Date().toISOString().slice(0, 10))}
+                  className={`text-[10px] px-2 py-0.5 rounded-full border transition-all ${
+                    targetDate === new Date().toISOString().slice(0, 10)
+                      ? 'border-gold bg-gold/20 text-gold font-bold'
+                      : 'border-white/10 text-silver/70 hover:bg-white/10'
+                  }`}
+                >
+                  Today
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTargetDate(new Date(Date.now() - 86400000).toISOString().slice(0, 10))}
+                  className={`text-[10px] px-2 py-0.5 rounded-full border transition-all ${
+                    targetDate === new Date(Date.now() - 86400000).toISOString().slice(0, 10)
+                      ? 'border-gold bg-gold/20 text-gold font-bold'
+                      : 'border-white/10 text-silver/70 hover:bg-white/10'
+                  }`}
+                >
+                  Yesterday
+                </button>
+              </div>
+            </div>
             <input
               type="date"
               value={targetDate}
@@ -303,7 +330,7 @@ export default function DailyHoroscopePage() {
               style={{ border: '1px solid rgba(255,255,255,0.1)', colorScheme: 'dark' }}
             />
           </div>
-          <div className="flex-1 text-left">
+          <div className="flex-1 text-left w-full">
             <label className="mb-1 block text-xs text-silver/60">Date of Birth (Optional)</label>
             <input
               type="date"
@@ -313,6 +340,14 @@ export default function DailyHoroscopePage() {
               style={{ border: '1px solid rgba(255,255,255,0.1)', colorScheme: 'dark' }}
             />
           </div>
+        </div>
+
+        {/* Embedded Star Sky Generator */}
+        <div className="mt-6 pt-4 border-t border-white/10 text-left">
+          <CelestialSkyImageCard
+            initialDate={targetDate}
+            initialSign={selectedSign || 'scorpio'}
+          />
         </div>
       </div>
 

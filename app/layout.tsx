@@ -20,9 +20,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: 'AstraVerse AI — Discover Your Destiny Through the Stars',
+  title: 'AstraVerse — Celestial Observatory & Ephemeris',
   description:
-    'Generate astronomically accurate birth charts, daily horoscopes, and zodiac insights powered by real ephemeris calculations and AI interpretation.',
+    'Generate astronomically accurate birth charts, daily ephemeris transits, and natal insights powered by real celestial calculations and archetypal astrological wisdom.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

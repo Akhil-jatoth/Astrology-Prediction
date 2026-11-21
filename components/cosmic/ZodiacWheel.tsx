@@ -25,15 +25,17 @@ interface ZodiacWheelProps {
   interactive?: boolean;
   onSelectSign?: (sign: string) => void;
   selectedSign?: string | null;
+  className?: string;
 }
 
-export function ZodiacWheel({ interactive, onSelectSign, selectedSign }: ZodiacWheelProps) {
+export function ZodiacWheel({ interactive, onSelectSign, selectedSign, className }: ZodiacWheelProps) {
   return (
     <div className="relative">
       <ZodiacWheel3D
         interactive={interactive}
         onSelectSign={onSelectSign}
         selectedSign={selectedSign}
+        className={className}
       />
       {interactive && (
         <div className="mt-4 flex flex-wrap justify-center gap-2 md:hidden">

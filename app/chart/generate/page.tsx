@@ -9,10 +9,16 @@ import { useChartStore } from '@/store/useChartStore';
 import { useAuth } from '@/hooks/useAuth';
 import type { GeocodeResult } from '@/lib/geocode';
 import { AstrologyChatbox } from '@/components/cosmic/AstrologyChatbox';
+import { NatalChartPdfDocument } from '@/components/cosmic/NatalChartPdfDocument';
+import { CelestialSkyImageCard } from '@/components/cosmic/CelestialSkyImageCard';
 
 export default function ChartGeneratePage() {
   const { user, getIdToken } = useAuth();
   const { lastChart, lastInterpretation, setChart } = useChartStore();
+
+  const handleDownloadPdf = () => {
+    window.print();
+  };
 
   const [dob, setDob] = useState('');
   const [birthTime, setBirthTime] = useState('');
@@ -180,13 +186,14 @@ export default function ChartGeneratePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-24 pt-28">
-      <h1 className="mb-2 font-display text-3xl text-gold">Birth Chart Generator</h1>
-      <p className="mb-8 text-silver">
-        Planetary positions calculated with real ephemeris data — not AI hallucinations.
-      </p>
+      <div className="print:hidden">
+        <h1 className="mb-2 font-display text-3xl text-gold">Birth Chart Generator</h1>
+        <p className="mb-8 text-silver">
+          Planetary positions computed with VSOP87 analytical solutions and arcsecond astronomical precision.
+        </p>
 
-      <Card className="mb-8">
-        <form onSubmit={handleGenerate} className="space-y-4">
+        <Card className="mb-8">
+          <form onSubmit={handleGenerate} className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="dob" className="mb-1 block text-xs text-silver">
@@ -301,11 +308,38 @@ export default function ChartGeneratePage() {
           </Button>
         </form>
       </Card>
+      </div>
 
       {hasGenerated && lastChart && (
-        <div className="space-y-6">
-          <Card>
-            <h2 className="mb-4 font-display text-xl text-gold">Your Placements</h2>
+        <>
+          <div className="space-y-6 print:hidden">
+            {/* PDF Export Banner */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl border border-gold/30 bg-gold/10 backdrop-blur-md shadow-xl">
+              <div>
+                <h3 className="font-display text-lg font-bold text-gold flex items-center gap-2">
+                  <span>✦</span>
+                  <span>Official Natal Ephemeris Dossier Ready</span>
+                </h3>
+                <p className="text-xs text-silver/80">
+                  Download or print your certified 2-page astrological report with exact planetary degrees and house cusps.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleDownloadPdf}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gold hover:bg-gold-light text-primary font-bold px-5 py-2.5 text-xs shadow-lg shadow-gold/20 hover:scale-105 transition-all flex-shrink-0"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Export PDF Report</span>
+              </button>
+            </div>
+
+            <Card>
+              <h2 className="mb-4 font-display text-xl text-gold">Your Placements</h2>
             <div className="mb-6 grid gap-4 sm:grid-cols-3">
               <div className="rounded-md bg-primary/40 p-4 text-center">
                 <p className="text-xs text-silver">Sun</p>
@@ -359,6 +393,15 @@ export default function ChartGeneratePage() {
                   )}
                 </div>
               )}
+
+              {/* High-Resolution Downloadable Celestial Star Image */}
+              <div className="mt-8 w-full max-w-2xl">
+                <CelestialSkyImageCard
+                  initialDate={dob || new Date().toISOString().slice(0, 10)}
+                  initialSign={lastChart.sunSign}
+                  title={`Celestial Sky & Star Map for ${lastChart.sunSign.toUpperCase()}`}
+                />
+              </div>
             </div>
 
             <h3 className="mb-2 text-sm font-semibold text-white">Planet Positions</h3>
@@ -396,7 +439,7 @@ export default function ChartGeneratePage() {
 
           {lastInterpretation && (
             <Card>
-              <h2 className="mb-4 font-display text-xl text-gold">AI Interpretation</h2>
+              <h2 className="mb-4 font-display text-xl text-gold">Natal Chart Synthesis & Archetypal Reading</h2>
               <p className="whitespace-pre-line leading-relaxed text-silver">
                 {lastInterpretation.content}
               </p>
@@ -409,7 +452,20 @@ export default function ChartGeneratePage() {
             contextData={`Birth Chart Placements: ${JSON.stringify(lastChart)}`} 
           />
         </div>
-      )}
-    </div>
-  );
+
+        {/* Printable Multi-Page PDF Document Component */}
+        <NatalChartPdfDocument
+          chart={lastChart}
+          interpretation={lastInterpretation}
+          birthInfo={{
+            dob,
+            birthTime,
+            city: selectedPlace?.name ? selectedPlace.name.split(',')[0].trim() : (city || 'Standard Horizon'),
+            country: selectedPlace?.name ? selectedPlace.name.split(',').slice(-1)[0]?.trim() : country,
+          }}
+        />
+      </>
+    )}
+  </div>
+);
 }

@@ -18,12 +18,38 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overscroll-behavior: none;
   }
 
   body {
     @apply bg-primary text-silver font-sans antialiased;
     background: var(--gradient-bg);
     min-height: 100vh;
+    overscroll-behavior: none;
+  }
+
+  /* Custom celestial scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(11, 16, 38, 0.6);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 209, 102, 0.25);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 209, 102, 0.5);
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   h1,
@@ -130,6 +156,13 @@
     color: rgba(229, 231, 235, 0.7);
     border-color: rgba(255, 209, 102, 0.4);
   }
+  /* Hide Next.js development indicator badge */
+  [data-nextjs-dev-indicator],
+  [data-nextjs-toast],
+  #__next-build-watcher,
+  nextjs-portal {
+    display: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -140,5 +173,41 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Hide app chrome, navigation, canvas background, and interactive widgets */
+  header,
+  footer,
+  nav,
+  canvas,
+  .no-print,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:block {
+    display: block !important;
+  }
+
+  .page-break {
+    page-break-before: always;
+    break-before: page;
   }
 }

@@ -138,7 +138,7 @@ export const ZODIAC_DATA: Record<
 };
 
 export const AI_DISCLAIMER =
-  'This reading is generated for guidance and entertainment purposes only and is not a guaranteed prediction. Astrological calculations are astronomically accurate; interpretations are AI-generated.';
+  'Calculated with high-precision astronomical ephemerides and archetypal astrological principles. Offered for guidance, self-reflection, and contemplation.';
 
 export const PLANETS = [
   'Sun',

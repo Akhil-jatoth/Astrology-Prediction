@@ -28,6 +28,7 @@ export function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
+                prefetch={true}
                 className={`text-sm transition-colors hover:text-gold ${
                   pathname.startsWith(link.href) ? 'text-gold' : 'text-silver'
                 }`}
